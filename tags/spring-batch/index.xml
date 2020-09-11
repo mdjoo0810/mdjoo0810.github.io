@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Aaron Tech Blog</title>
-    <link>https://mdjoo0810.github.io/post/</link>
-    <description>Recent content in Posts on Aaron Tech Blog</description>
+    <title>Spring Batch on Aaron Tech Blog</title>
+    <link>https://mdjoo0810.github.io/tags/spring-batch/</link>
+    <description>Recent content in Spring Batch on Aaron Tech Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
     <lastBuildDate>Fri, 11 Sep 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://mdjoo0810.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mdjoo0810.github.io/tags/spring-batch/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       <guid>https://mdjoo0810.github.io/post/springbatch_1/</guid>
       <description>Spring Batch의 기본적인 설명이며 상세한 부분은 시리즈로 연재합니다.
 &amp;lt;우아한 테크 세이나 - 이동욱님의 강좌를 바탕으로 작성합니다.</description>
-    </item>
-    
-    <item>
-      <title>블로그 개설</title>
-      <link>https://mdjoo0810.github.io/post/test/</link>
-      <pubDate>Fri, 11 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mdjoo0810.github.io/post/test/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;블로그를 시작합니다.&lt;/p&gt;</description>
     </item>
     
   </channel>

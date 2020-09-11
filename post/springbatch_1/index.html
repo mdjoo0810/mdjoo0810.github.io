@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Aaron | Spring Batch 훑어보기 </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.74.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Backend Developer">
+    
+    <link rel="stylesheet" href="https://mdjoo0810.github.io/css/style.min.5be3a155aa89a24586c761b1b5538c4040e3735ee32ac12a708dc1696c0982f5.css" integrity="sha256-W&#43;OhVaqJokWGx2GxtVOMQEDjc17jKsEqcI3BaWwJgvU=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="https://mdjoo0810.github.io/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://mdjoo0810.github.io/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://mdjoo0810.github.io/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://mdjoo0810.github.io/favicons/favicon-16x16.png">
+    <link rel="canonical" href="https://mdjoo0810.github.io/post/springbatch_1/">
+    
+    
+    <script type="text/javascript" src="https://mdjoo0810.github.io/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mdjoo0810.github.io/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Spring Batch 훑어보기"/>
+<meta name="twitter:description" content="Spring Batch Study Start"/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="https://mdjoo0810.github.io/images/profile.png" alt="profile picture">
+        <h3 title=""><a href="/">I&#39;m Aaron</a></h3>
+        <div class="description">
+          <p>Backend Developer</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://de.linkedin.com/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/mdjoo0810" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:mdjoo0810@gmail.com" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Aaron 2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/"  title="">Home</a></li>
+        
+        
+        <li><a  href="/post/"  title="">Posts</a></li>
+        
+        
+        <li><a  href="/about/"  title="">About</a></li>
+        
+        
+        <li class="theme-switch-item">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Spring Batch 훑어보기
+        </h3>
+        
+        <div class="info">
+          <i class="fa fa-sun-o"></i>
+          <span class="date">Fri, Sep 11, 2020</span>
+          <i class="fa fa-clock-o"></i><span class="reading-time">3-minute read</span>
+        </div>
+        
+        </div>
+
+    <p>Spring Batch의 기본적인 설명이며 상세한 부분은 시리즈로 연재합니다.</p>
+<p>&lt;우아한 테크 세이나 - 이동욱님의 강좌를 바탕으로 작성합니다.&gt;</p>
+<h2 id="배치-애플리케이션이란">배치 애플리케이션이란</h2>
+<p>사람과 상호 작용 없이 이어지는 프로그램 들의 실행으로 웹 애플리케이션이랑 상반 관계입니다.</p>
+<p>웹 - 실시간처리 / 상대적인 속도 / QA 용이성</p>
+<p>배치 - 후속처리 / 절대적인 속도 / QA 복잡성</p>
+<p>따라서 QA 및 테스트 용이성을 위해 테스트 코드 작성은 필수입니다.</p>
+<h2 id="spring-batch-와-quartz">Spring Batch 와 Quartz</h2>
+<h3 id="quartz는-스케줄링-프레임워크이다">Quartz는 스케줄링 프레임워크이다</h3>
+<ul>
+<li>매 시간 / 마지막 주 금요일에 실행</li>
+</ul>
+<p>그에 반에 Batch는 사용자가 누구던지 한번 실행이 되면 컴퓨터 끼리 상호작용하여 실행되는 프로그램이다. 이때 실행자가 Quartz가 되는 것이므로 Quartz는 Spring Batch의 보완제 역할이지 대체제가 아닙니다.</p>
+<p>Ex) 매일 오전 9시에 실행 (Quartz, 실행자) -&gt; Spring Batch 가 프로그램을 돌린다.</p>
+<p>그럼 과연 배치 애플리케이션을 사용해야 하는 상황은 무엇일까?</p>
+<ul>
+<li>일정 주기로 실행</li>
+<li>실시간 처리가 어려운 대량의 데이터를 처리할 때</li>
+</ul>
+<p>500만건 ~ 1000만건의 수준은 상관은 없다.
+하지만 1억건 등 정산 시스템과 같이 많은 데이터를 처리할 때 사용해야한다.</p>
+<p>즉 대용량 데이터 처리가 절대적인 요구 사항이다.</p>
+<p>스프링 배치에서는 모든 데이터를 메모리에 쌓지 않는 조회 방식이 기본 방식이다.
+DB를 기준으로 Paging처럼 page size 만큼 데이터를 읽어오고 Chunk Size 와 같이 DB에 커밋을 합니다.</p>
+<p>따라서 jpaRepository.findAll() 과같이 사용하는 것을 권장하지 않습니다.</p>
+<h3 id="job--step--tasklet">Job / Step / Tasklet</h3>
+<p>Job -&gt; Step -&gt; Tasklet 순서로 영역을 표시할 수 있습니다.</p>
+<p>Job은 Spring Batch의 실행 단위 입니다. Step은 Job안에서 분할하여 실행할 수 있는 프로세스와 같은 단위입니다.</p>
+<p>Tasklet는 Interface이며 구현체는 ChunkOrientedTasklet 입니다.</p>
+<h3 id="jobscope-stepscope-jobparameter">@JobScope, @StepScope, JobParameter</h3>
+<p>Spring Batch는 외부에서 파라미터를 주입받아 Batch컴포넌트에서 사용 할 수 있습니다. 이를 JobParameters라고 합니다. 이는 하위 계층에서 사용할 수 있습니다.</p>
+<p>사용법 : @Value(“#{jobParameter[파라미터 명]}”) 타입 이름</p>
+<p>이를 사용하는 방법은 Step에서 사용할 시 Job에서 가져와야 함으로 @JobScope를 사용합니다. 그렇다면 @StepScope는 하위 계층들인 Tasklet, Reader, Processor, Writer에서 사용할 수 있습니다.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// @JobScope를 위한 예제
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Bean</span>
+<span style="color:#66d9ef">public</span> Job <span style="color:#a6e22e">scopeJob</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">return</span> jobBuilderFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;scope Job&#34;</span><span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">(</span>scopeStep1<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">))</span> <span style="color:#75715e">// param : requestDate
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">(</span>scopeStep2<span style="color:#f92672">())</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@Bean</span>
+<span style="color:#a6e22e">@JopScope</span>
+<span style="color:#66d9ef">public</span> Step <span style="color:#a6e22e">scopeStep1</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#{jobParameters[requestDate]}&#34;</span><span style="color:#f92672">)</span> String requestDate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">return</span> stepBuilderFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;scopeStep1&#34;</span><span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">tasklet</span><span style="color:#f92672">((</span>contribution<span style="color:#f92672">,</span> chunkContext<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;This is scopeStep1&#34;</span><span style="color:#f92672">);</span>
+                log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestDate = {}&#34;</span><span style="color:#f92672">,</span> requestDate<span style="color:#f92672">);</span>
+
+                <span style="color:#66d9ef">return</span> RepeatStatus<span style="color:#f92672">.</span><span style="color:#a6e22e">FINISHED</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">})</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">// @StepScope를 위한 예제
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Bean</span>
+<span style="color:#66d9ef">public</span> Step <span style="color:#a6e22e">scopeStep2</span> <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">return</span> stepBuilderFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;scopeStep2&#34;</span><span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">tasklet</span><span style="color:#f92672">(</span>scopeStep2Tasklet<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">))</span> <span style="color:#75715e">//requestDate
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@Bean</span>
+<span style="color:#a6e22e">@StepScope</span>
+<span style="color:#66d9ef">public</span> Tasklet <span style="color:#a6e22e">scopeStep2Tasklet</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#{jobParameters[requestDate]}&#34;</span><span style="color:#f92672">)</span> String requestDate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>contribution<span style="color:#f92672">,</span> chunkContext<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;This is scopeStep2&#34;</span><span style="color:#f92672">);</span>
+        log<span style="color:#f92672">.</span><span style="color:#a6e22e">ingo</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestDate = {}&#34;</span><span style="color:#f92672">,</span> requestDate<span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">return</span> RepeatStatus<span style="color:#f92672">.</span><span style="color:#a6e22e">FINISHED</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Spring Batch의 jopParameter는 Long, String, Double, Date 타입들을 모두 지원합니다. 하지만 Enum, LocalDate, LocalDateTime은 지원하지 않습니다.</p>
+<p>그래서 Date같은 경우 String 으로 받고</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// ... @Value(&#34;#{jobParameters[startDate]}&#34;) String startDate
+</span><span style="color:#75715e"></span>LocalDate startDate <span style="color:#f92672">=</span> LocalDateUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">toLocalDate</span><span style="color:#f92672">(</span>targetStartDate<span style="color:#f92672">);</span>
+</code></pre></div><p>다음과 같이 형변을 매번 해주어야 합니다. 이후 비지니스 로직을 실행해야 합니다.</p>
+<p>하지만 매번 하는 것은 귀찮습니다.</p>
+<p>따라서 @Value의 특성을 살리면 더욱 간단해집니다.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Slf4j</span>
+<span style="color:#a6e22e">@Getter</span>
+<span style="color:#a6e22e">@NoArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateDateJobParameter</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> LocalDate createDate<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#{jobparameters[createDate]}&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setCreateDate</span><span style="color:#f92672">(</span>String createDate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        DateTimeFormatter formatter <span style="color:#f92672">=</span> DateTimeFormatter<span style="color:#f92672">.</span><span style="color:#a6e22e">ofPatter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;yyyy-MM-dd&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">createDate</span> <span style="color:#f92672">=</span> LocalDate<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span>createDate<span style="color:#f92672">,</span> formatter<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>다음과 같이 setter 메소드에 @Value를 선언 하여 문자열로 받은 뒤 원하는 타입으로 세팅합니다. 그러면 다음과 같이 사용할 수 있습니다.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JobParameterBatchConfiguration</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String BATCH_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jobParameterBatch&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String JOB_NAME <span style="color:#f92672">=</span> BATCH_NAME <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_job&#34;</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> JobBuilderFactory jobBuilderFactory<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> StepBuilderFactory stepBuilderFactory<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> EntityManagerFactory entityManagerFactory<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// @JobScope Bean 생성 후 생성자 DI를 받습니다.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> CreateDateJobParameter jobParameter<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Bean</span><span style="color:#f92672">(</span>BATCH_NAME <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;jobParameter&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#a6e22e">@JobScope</span>
+    <span style="color:#66d9ef">public</span> CreateDateJobParameter <span style="color:#a6e22e">jobParameter</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CreateDateJobParameter<span style="color:#f92672">();</span> <span style="color:#f92672">}</span>
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">// 그럼 위에 만들어둔 것을 어떻게 사용은 어떻게 하느냐
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Bean</span><span style="color:#f92672">(</span>name <span style="color:#f92672">=</span> BATCH_NAME <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_reader&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@StepScope</span>
+<span style="color:#66d9ef">public</span> JpaPagingItemReader<span style="color:#f92672">&lt;</span>Product<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">reader</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+
+    Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> params <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+    params<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;createDate&#34;</span><span style="color:#f92672">,</span> jobParameter<span style="color:#f92672">.</span><span style="color:#a6e22e">getCreateDate</span><span style="color:#f92672">());</span>
+
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> JpaPagingItemReaderBuilder<span style="color:#f92672">&lt;</span>Product<span style="color:#f92672">&gt;()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">(</span>BATCH_NAME <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_reader&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">entityManagerFactory</span><span style="color:#f92672">(</span>entityManagerFactory<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">pageSize</span><span style="color:#f92672">(</span>chunkSize<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">queryString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SELECT p FROM Product p WHERE p.createDate =:createDate&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">parameterValues</span><span style="color:#f92672">(</span>params<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>이때 @JopScope, @StepScope 는 Late Binding (늦은 할당) 입니다.
+대부분 Spring Bean은 애플리케이션이 실행한 시점에 환경변수 등을 끌고와서 처음으로 싱글톤 Bean을 만듭니다. 하지만 위는 생성시점이 Job이나 Step이 실행될 때 생성이 됩니다.</p>
+<p>이는 애플리케이션 실행 후에도 동적으로 reader, processor, writer bean을 생성할 수 있다는 말이 됩니다.</p>
+<hr>
+<p>긴 글 읽어 주셔서 감사합니다.
+향후 본 게시물은 오류나 추가 정보로 수정될 수 있습니다.
+감사합니다.</p>
+<p>Best regards you.</p>
+<hr>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+    <span class="separator"><a class="tag" href="/tags/backend/">BackEnd</a><a class="tag" href="/tags/spring-boot/">Spring Boot</a><a class="tag" href="/tags/spring-batch/">Spring Batch</a></span>
+
+      </div>
+    </div>
+
+    
+           
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="https://mdjoo0810.github.io/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="https://mdjoo0810.github.io/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://mdjoo0810.github.io/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>
